@@ -1,2 +1,38 @@
 # Timed-JavaScript-Quiz
+
+
+## Description
+
 A timed JavaScript quiz to help me study the fundamentals of JavaScript.
+This quiz will help me practice for interview settings where I might have a
+live assessment and interactive coding challenges.
+
+## Installation
+
+URL: 
+
+## Usage
+
+When user clicks the Start Quiz button, they are taken through a series of questions
+relating to the fundamentals of JavaScript.
+
+<img src="..." alt="Home screen for quiz with Start Quiz button.">
+
+User will click on the button for the answer they select and are moved to the next question.
+
+<img src="..." alt="Sample of quiz question with multiple choice answers.">
+
+If the user gets a question wrong, time comes off the timer.
+Once the time is up, the user will be shown their final score and asked to enter their initals.
+<img src="..." alt="Screen showing final score and asking to submit intitals.">
+
+Then the user is taken to the High Score screen.
+<img src="..." alt="High scores for past games.">
+
+## Credits
+
+TBD: 
+
+## License
+
+None needed.

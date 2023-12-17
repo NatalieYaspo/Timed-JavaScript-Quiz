@@ -9,7 +9,7 @@ live assessment and interactive coding challenges.
 
 ## Installation
 
-URL: 
+URL: https://natalieyaspo.github.io/Timed-JavaScript-Quiz/
 
 ## Usage
 

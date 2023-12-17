@@ -80,3 +80,11 @@ body {
 .hide {
     display: none;
 }
+
+
+#gameTimer {
+    font-size: smaller;
+    font-weight: bolder;
+    position: fixed;
+    justify-content: right;
+}

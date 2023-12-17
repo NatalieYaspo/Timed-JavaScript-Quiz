@@ -31,7 +31,7 @@ Then the user is taken to the High Score screen.
 
 ## Credits
 
-TBD: 
+Web Dev Simplified: Build a Quiz App with JavaScript - used to help me structure my page in a logical sense to make the quiz work, showing only 1 question at a time.
 
 ## License
 

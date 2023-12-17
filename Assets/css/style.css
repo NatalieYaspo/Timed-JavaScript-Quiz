@@ -1,0 +1,82 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
+
+
+/*This is for the Question Box*/
+.container {
+    width: 800px;
+    max-width: 90%;
+    padding: 20px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: teal;
+    border-width: 5px;
+}
+
+/*style for answer buttons area*/
+.answer-btn-style {
+    display: flex;
+    text-wrap: wrap;
+    flex-direction: column;
+    width: max-content;
+    gap: 15px;
+    margin: 20px;
+    
+}
+
+.btn {
+    color: white;
+    background-color: rgb(91, 167, 167);
+    border-radius: 5px;
+    outline: none;
+}
+
+.btn:hover {
+    border-color: white;
+    border-width: 2px;
+}
+
+/*style for start button*/
+.start-btn {
+    display: flex;
+    background-color: darkgrey;
+    color: white;
+    font-size: 20px;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.start-btn:hover {
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    color: black;
+    font-size: 20px;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/*This hides the question box until the quiz is active*/
+.hide {
+    display: none;
+}

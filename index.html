@@ -9,7 +9,7 @@
 
 <body>
     <header>
-        <div id="gameTimer"></div>
+        
         <h1>JavaScript Quiz</h1>
     </header>
 
@@ -28,12 +28,18 @@
             </div>
             <div class="controls">
                 <button id="start-btn" class="start-btn">START QUIZ</button>
-                <!--Maybe put the timer in here? -->
+                <form id="initials-frm" class="hide">
+                    <label for="initials">Enter Intials:</label>
+                    <input type="text" id="initials" name="initials">
+                    <button id="submit-btn" class="submit-btn">Submit</button>
+                </form>
+                <br>
+                
             </div>
         </section>
 
         <section>
-
+            <div id="gameTimer"></div>
         </section>
     </main>
     

@@ -6,12 +6,16 @@ var ansButtonEl = document.querySelector("#answer-btn");
 var formEl = document.querySelector("#initials-frm");
 var submitButton = document.querySelector("#submit-btn");
 var gameScore = document.querySelector("#gameScore");
-var newScore = document.querySelector("#newScore");
+var correctAns = document.querySelector("#correct-answers");
+var totalQs = document.querySelector("#total-questions");
+
+//need to add correct and wrong
 
 //Question Variable:
 var secondsLeft = 60;
 let currentQuestionIndex
 var scoreCounter = 0;
+var qsTotal = 0;
 
 //ACTIVE Items:
 startButton.addEventListener("click", startGame) //tested with Cosole.log
@@ -22,9 +26,12 @@ function startGame() {
     setTimer();
     startButton.classList.add("hide");
     questionContainerEl.classList.remove("hide");
+    correctAns.classList.remove("hide");
+    totalQs.classList.remove("hide");
     // shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
     setNextQuestion();
+    showScore();
 }
 
 function setTimer() {
@@ -46,29 +53,33 @@ function setTimer() {
     }, 500);
 }
 
-
+//This is to set the next question when the time is ready.
 function setNextQuestion() {
+    //This resets the state of the buttons for the next question
     resetState()
     showQuestion(questions[currentQuestionIndex]);
 }
 
 function showQuestion(question) {
+    console.log(question);
     questionEl.innerText = question.question
-    question.answers.forEach(answer => {
-        //this is supposed to swap out the button placeholders with buttons for new answers.
+    question.options.forEach(options => {
+        //This swaps out the button placeholders with buttons for new answers.
         const button = document.createElement("button");
-        button.innerText = answer.text
+        button.innerText = options
         button.classList.add("btn")
         ansButtonEl.appendChild(button)
         button.addEventListener("click", selectAnswer)
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
-            // scoreCounter++
-        // } else {
-            // secondsLeft.value - 10
-        }
-        // setNextQuestion();
-    })
+    //     if (options = answer) { ///may need to remove this.. moved it to 91.
+    //         console.log("correct!");
+    //         // scoreCounter++
+    //     // } else {
+    //         // secondsLeft.value - 10
+    //     } 
+    // })
+    //currentQuestionIndex++;
+    //setNextQuestion(); //giving me an error that max call size exceeded
+})
 }
 
 function resetState() {
@@ -78,13 +89,39 @@ function resetState() {
 }
 
 function selectAnswer(e) {
+    console.log(e.target);
     const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
-    setStatusClass(document.body, correct)
-    Array.from(ansButtonEl.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
+    qsTotal++
+    // const correct = selectedButton.dataset.correct //may not need this?
+    const question = questions[currentQuestionIndex];
+    console.log(question);
+    if (selectedButton.textContent == question.answer) {
+        // console.log("correct!");
+        //score will increase by 1
+        scoreCounter++
+        // console.log(scoreCounter);
+        setCorrect();
+    // } else {
+        // secondsLeft.value - 10
+    } else if (selectedButton.textContent != question.answer) { 
+        // console.log("wrong!");
+        secondsLeft.value - 10 //I NEED TO GET THIS TO DECREASE.
+    }
+    //setStatusClass(document.body, correct)
+    // Array.from(ansButtonEl.children).forEach(button => {
+    //     setStatusClass(button, button.dataset.correct)// I don't know that i need this.
+    setTotal();
+    setNextQuestion()
+}
 
+function setCorrect() {
+    correctAns.textContent = "Correct Answers: " + scoreCounter;
+    localStorage.setItem("correctAns", scoreCounter);
+}
+
+function setTotal() {
+    totalQs.textContent = "Total Questions Answered: " + qsTotal;
+    localStorage.setItem("qsTotal", qsTotal);
 }
 
 function setStatusClass (element, correct) { //need to add correct and wrong elements to html?
@@ -102,7 +139,7 @@ function clearStatusClass (element) {
 }
 
 function showScore() {
-
+    // for 
 }
 
 function getHighScores () { //I have no idea if this will work.  I may need to rework.
@@ -127,21 +164,23 @@ function refreshScores() {
 const questions = [
     {
         question: "This is my first question?",
-        answers: [
-            { text: "A: Yes", correct: true},
-            { text: "B: No", correct: false},
-            { text: "C: No", correct: false},
-            { text: "D: No", correct: false}
+        answer: "Blue",
+        options: [
+            "Blue",
+            "Purple",
+            "Orange",
+            "yellow"
         ]
     }, 
 
     {
         question: "This is my 2nd question?",
-        answers: [
-            { text: "1: Yes", correct: true},
-            { text: "2: No", correct: false},
-            { text: "3: No", correct: false},
-            { text: "4: No", correct: false}
+        answer: "Natalie",
+        options: [
+            "Natalie",
+            "Westley",
+            "Wyatt",
+            "Solenn"
         ]
     }, 
 ]

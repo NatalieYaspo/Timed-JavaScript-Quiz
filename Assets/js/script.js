@@ -6,10 +6,12 @@ var ansButtonEl = document.querySelector("#answer-btn");
 var formEl = document.querySelector("#initials-frm");
 var submitButton = document.querySelector("#submit-btn");
 var gameScore = document.querySelector("#gameScore");
+var newScore = document.querySelector("#newScore");
 var correctAns = document.querySelector("#correct-answers");
 var totalQs = document.querySelector("#total-questions");
+var runningScores = document.querySelector("#score-tally");
+var highScoreEl = document.querySelector("#highScores");
 
-//need to add correct and wrong
 
 //Question Variable:
 var secondsLeft = 60;
@@ -17,23 +19,22 @@ let currentQuestionIndex
 var scoreCounter = 0;
 var qsTotal = 0;
 
-//ACTIVE Items:
+//ACTIVE Event Listeners:
 startButton.addEventListener("click", startGame) //tested with Cosole.log
 submitButton.addEventListener("click", logInitialsScore)//NOT TESTED
 
-//functions to play the game
+//Functions to play the game
 function startGame() {
     setTimer();
     startButton.classList.add("hide");
     questionContainerEl.classList.remove("hide");
-    correctAns.classList.remove("hide");
-    totalQs.classList.remove("hide");
-    // shuffledQuestions = questions.sort(() => Math.random() - .5);
+    runningScores.classList.remove("hide");
+    // shuffledQuestions = questions.sort(() => Math.random() - .5);//REMOVE?
     currentQuestionIndex = 0;
     setNextQuestion();
-    showScore();
 }
 
+//Time Function for game.
 function setTimer() {
 //I need to add an ability for this to decrease when an incorrect answer is selected.
     var timeInterval = setInterval(function() {
@@ -47,10 +48,9 @@ function setTimer() {
             clearInterval(timeInterval);
             //moves to score screen
             questionContainerEl.classList.add("hide");
-            showScore();
-            gameScore.classList.remove("hide");
+            endGame();
         }
-    }, 500);
+    }, 250); //NEEDS TO BE RESET TO 1000
 }
 
 //This is to set the next question when the time is ready.
@@ -60,6 +60,7 @@ function setNextQuestion() {
     showQuestion(questions[currentQuestionIndex]);
 }
 
+//Shows the questions based on the Questions Array at the bottom.
 function showQuestion(question) {
     console.log(question);
     questionEl.innerText = question.question
@@ -73,17 +74,19 @@ function showQuestion(question) {
 })
 }
 
+//Resets the state of the buttons for the next questions, answers.
 function resetState() {
     while (ansButtonEl.firstChild) {
         ansButtonEl.removeChild(ansButtonEl.firstChild)
     }
 }
 
+//Everything that happens when an answer is selected.
 function selectAnswer(e) {
     // console.log(e.target);
     const selectedButton = e.target
     qsTotal++
-    // const correct = selectedButton.dataset.correct //may not need this?
+    // const correct = selectedButton.dataset.correct //REMOVE?
     const question = questions[currentQuestionIndex];
     // console.log(question);
     if (selectedButton.textContent == question.answer) {
@@ -92,19 +95,24 @@ function selectAnswer(e) {
         scoreCounter++
         // console.log(scoreCounter);
         setCorrect();
-    // } else {
-        // secondsLeft.value - 10
+
     } else if (selectedButton.textContent != question.answer) { 
         // console.log("wrong!");
         secondsLeft.value - 10 //I NEED TO GET THIS TO DECREASE.
     }
-    //setStatusClass(document.body, correct)
+    // setStatusClass(document.body, correct) //REMOVE?
     // Array.from(ansButtonEl.children).forEach(button => {
     //     setStatusClass(button, button.dataset.correct)// I don't know that i need this.
     //Sets total questions answered, increases question index by 1 and runs setting new question.
     setTotal();
     currentQuestionIndex++
     setNextQuestion()
+    //If no more questions, show final score & submit initials.
+    if (currentQuestionIndex.length < currentQuestionIndex) {
+        // gameScore.classList.remove("hide");
+        // runningScores.classList.add("hide");
+        // newScore.textContent = "Your Score: " + (scoreCounter / qsTotal)*100 + "%";
+    }
 }
 
 function setCorrect() {
@@ -117,24 +125,20 @@ function setTotal() {
     localStorage.setItem("qsTotal", qsTotal);
 }
 
-function setStatusClass (element, correct) { //need to add correct and wrong elements to html?
-    clearStatusClass(element)
-    if (correct) {
-        element.classList.add("correct")
-    } else {
-        element.classList.add("wrong")
-    }
+
+function endGame() {
+    gameScore.classList.remove("hide");
+    runningScores.classList.add("hide");
+    newScore.textContent = "Your Score: " + (scoreCounter / qsTotal)*100 + "%";
 }
 
-function clearStatusClass (element) {
-    element.classList.remove("correct")
-    element.classList.remove("wrong")
+
+function logInitialsScore() {
+    scoreCounter.textContent = scoreCounter;
+    localStorage.setItem("newScore", scoreCounter);
 }
 
-function showScore() {
-    // for 
-}
-
+//I STILL NEED TO MAKE THIS WORK>
 function getHighScores () { //I have no idea if this will work.  I may need to rework.
     var storedScores = localStorage.getItem("newScore");
     if (storedScores === null) {
@@ -144,10 +148,6 @@ function getHighScores () { //I have no idea if this will work.  I may need to r
     }
 }
 
-function logInitialsScore() {
-    scoreCounter.textContent = scoreCounter;
-    localStorage.setItem("newScore", scoreCounter);
-}
 
 function refreshScores() {
 

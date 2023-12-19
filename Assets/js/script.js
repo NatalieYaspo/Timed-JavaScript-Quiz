@@ -30,7 +30,6 @@ function startGame() {
     startButton.classList.add("hide");
     questionContainerEl.classList.remove("hide");
     runningScores.classList.remove("hide");
-    // shuffledQuestions = questions.sort(() => Math.random() - .5);//REMOVE?
     currentQuestionIndex = 0;
     setNextQuestion();
 }
@@ -86,44 +85,38 @@ function resetState() {
 function selectAnswer(e) {
     // console.log(e.target);
     const selectedButton = e.target
+   // Increases total number of questions answered.
     qsTotal++
-    // const correct = selectedButton.dataset.correct //REMOVE?
     const question = questions[currentQuestionIndex];
     // console.log(question);
     if (selectedButton.textContent == question.answer) {
         // console.log("correct!");
-        //score will increase by 1
+        //Score will increase by 1 if correct answer slected.
         scoreCounter++
         // console.log(scoreCounter);
         setCorrect();
-
     } else if (selectedButton.textContent != question.answer) { 
         // console.log("wrong!");
         secondsLeft.value - 10 //I NEED TO GET THIS TO DECREASE.
     }
-    // setStatusClass(document.body, correct) //REMOVE?
-    // Array.from(ansButtonEl.children).forEach(button => {
-    //     setStatusClass(button, button.dataset.correct)// I don't know that i need this.
     //Sets total questions answered, increases question index by 1 and runs setting new question.
     setTotal();
     currentQuestionIndex++
     setNextQuestion()
     //If no more questions, show final score & submit initials.
     if (currentQuestionIndex.length < currentQuestionIndex) {
-        // gameScore.classList.remove("hide");
-        // runningScores.classList.add("hide");
-        // newScore.textContent = "Your Score: " + (scoreCounter / qsTotal)*100 + "%";
+        // THIS STILL ISN"T WORKING.
     }
 }
 
 function setCorrect() {
     correctAns.textContent = "Correct Answers: " + scoreCounter;
-    localStorage.setItem("correctAns", scoreCounter);
+    localStorage.setItem("correctAns", scoreCounter); //Do I need this?
 }
 
 function setTotal() {
     totalQs.textContent = "Total Questions Answered: " + qsTotal;
-    localStorage.setItem("qsTotal", qsTotal);
+    localStorage.setItem("qsTotal", qsTotal); //Do I need this?
 }
 
 
@@ -132,28 +125,33 @@ function endGame() {
     runningScores.classList.add("hide");
     var finalScore = [(scoreCounter / qsTotal)*100];
     newScore.textContent = "Your Score: " + finalScore + "%"; //CAN I LIMIT %??
-    submitButton.addEventListener("submit", logInitialsScore) //THIS IS NOT WORKING.
-    function logInitialsScore() {
-        localStorage.setItem("finalScore", finalScore);
-        localStorage.setItem("initials", initialsEl.value);
-        getHighScores();
-    }
-
 }
+
+submitButton.addEventListener('submit', function() {//THIS IS NOT WORKING.
+    event.preventDefault(),
+    function logInitialsScore() {
+        localStorage.setItem("finalScore", JSON.stringify(finalScore));
+        localStorage.setItem("initials", JSON.stringify(initialsEl.value));
+        //Once submitted, user taken to the High Score screen.
+        getHighScores();
+    };
+  }
+)
 
 //I STILL NEED TO MAKE THIS WORK>
 function getHighScores () { //I have no idea if this will work.  I may need to rework.
-    var storedScores = localStorage.getItem("newScore");
+    highScoreEl.classList.remove("hide");
+    var storedScores = localStorage.getItem("finalScore");
     if (storedScores === null) {
-        highScores = showScore.value
+        highScores = finalScore.value
     } else {
         highScores = storedScores;
     }
 }
 
 
-function refreshScores() {
-
+function clearScores() {
+    location.reload();
 }
 
 //list of questions:

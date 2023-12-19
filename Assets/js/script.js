@@ -102,41 +102,48 @@ function selectAnswer(e) {
     //Sets total questions answered, increases question index by 1 and runs setting new question.
     setTotal();
     currentQuestionIndex++
+    if (currentQuestionIndex >= questions.length) { // THIS STILL ISN"T WORKING.
+        endGame();
+    } else {
     setNextQuestion()
-    //If no more questions, show final score & submit initials.
-    if (currentQuestionIndex.length < currentQuestionIndex) {
-        // THIS STILL ISN"T WORKING.
     }
+    //if (question <= currentQuestionIndex.length) {
+    //     setNextQuestion()
+    // //If no more questions, show final score & submit initials.
 }
 
 function setCorrect() {
     correctAns.textContent = "Correct Answers: " + scoreCounter;
-    localStorage.setItem("correctAns", scoreCounter); //Do I need this?
+    // localStorage.setItem("correctAns", scoreCounter); //Do I need this?
 }
 
 function setTotal() {
     totalQs.textContent = "Total Questions Answered: " + qsTotal;
-    localStorage.setItem("qsTotal", qsTotal); //Do I need this?
+    // localStorage.setItem("qsTotal", qsTotal); //Do I need this?
 }
 
 
 function endGame() {
     gameScore.classList.remove("hide");
     runningScores.classList.add("hide");
+    questionContainerEl.classList.add("hide");
+    gameTimer.classList.add("hide");
     var finalScore = [(scoreCounter / qsTotal)*100];
     newScore.textContent = "Your Score: " + finalScore + "%"; //CAN I LIMIT %??
 }
 
-submitButton.addEventListener('submit', function() {//THIS IS NOT WORKING.
-    event.preventDefault(),
+submitButton.addEventListener('click', function(event) {
+    event.preventDefault(),//THIS IS NOT WORKING.
     function logInitialsScore() {
         localStorage.setItem("finalScore", JSON.stringify(finalScore));
         localStorage.setItem("initials", JSON.stringify(initialsEl.value));
+    }
         //Once submitted, user taken to the High Score screen.
-        getHighScores();
-    };
-  }
-)
+    getHighScores();
+})
+console.log(submitButton);//RUNS EVEN THOUGH NOT CLICKED.
+    
+
 
 //I STILL NEED TO MAKE THIS WORK>
 function getHighScores () { //I have no idea if this will work.  I may need to rework.
@@ -154,7 +161,7 @@ function clearScores() {
     location.reload();
 }
 
-//list of questions:
+//List of questions and answers.:
 const questions = [
     {
         question: "Which coding language allows the user to interact with the website?",

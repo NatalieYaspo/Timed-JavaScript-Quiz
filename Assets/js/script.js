@@ -130,6 +130,7 @@ function endGame() {
     gameScore.classList.remove("hide");
     runningScores.classList.add("hide");
     newScore.textContent = "Your Score: " + (scoreCounter / qsTotal)*100 + "%";
+    //CAN I LIMIT %??
 }
 
 
@@ -156,46 +157,57 @@ function refreshScores() {
 //list of questions:
 const questions = [
     {
-        question: "This is my first question?",
-        answer: "Blue",
+        question: "Which coding language allows the user to interact with the website?",
+        answer: "JavaScript",
         options: [
-            "Blue",
-            "Purple",
-            "Orange",
-            "yellow"
+            "CSS",
+            "HTML",
+            "JavaScript",
+            "Boolean"
         ]
     }, 
 
     {
-        question: "This is my 2nd question?",
-        answer: "Natalie",
+        question: "Which variable type contains a sequense of text?",
+        answer: "String",
         options: [
-            "Natalie",
-            "Westley",
-            "Wyatt",
-            "Solenn"
+            "String",
+            "Array",
+            "Boolean",
+            "Object"
         ]
     }, 
 
     {
-        question: "Question 3?",
-        answer: "test",
+        question: "Which operator signifies strict equality?",
+        answer: "===",
         options: [
-            "test 1",
-            "test",
-            "test 2",
-            "idk"
+            "=",
+            "!=",
+            "+=",
+            "==="
         ]
     }, 
 
     {
-        question: "4 four?",
-        answer: "golf",
+        question: "Which variable type allows you to store multiple values in a single reference?",
+        answer: "Array",
         options: [
-            "party",
-            "pencil",
-            "golf",
-            "notes"
+            "String",
+            "Array",
+            "Function",
+            "Boolean"
         ]
     }, 
+
+    {
+        question: "Which HTML tag is used to attach your JavaScript?",
+        answer: "<script>",
+        options: [
+            "<body>",
+            "<src>",
+            "<script",
+            "<meta>"
+        ]
+    }
 ]

@@ -70,15 +70,6 @@ function showQuestion(question) {
         button.classList.add("btn")
         ansButtonEl.appendChild(button)
         button.addEventListener("click", selectAnswer)
-    //     if (options = answer) { ///may need to remove this.. moved it to 91.
-    //         console.log("correct!");
-    //         // scoreCounter++
-    //     // } else {
-    //         // secondsLeft.value - 10
-    //     } 
-    // })
-    //currentQuestionIndex++;
-    //setNextQuestion(); //giving me an error that max call size exceeded
 })
 }
 
@@ -89,12 +80,12 @@ function resetState() {
 }
 
 function selectAnswer(e) {
-    console.log(e.target);
+    // console.log(e.target);
     const selectedButton = e.target
     qsTotal++
     // const correct = selectedButton.dataset.correct //may not need this?
     const question = questions[currentQuestionIndex];
-    console.log(question);
+    // console.log(question);
     if (selectedButton.textContent == question.answer) {
         // console.log("correct!");
         //score will increase by 1
@@ -110,7 +101,9 @@ function selectAnswer(e) {
     //setStatusClass(document.body, correct)
     // Array.from(ansButtonEl.children).forEach(button => {
     //     setStatusClass(button, button.dataset.correct)// I don't know that i need this.
+    //Sets total questions answered, increases question index by 1 and runs setting new question.
     setTotal();
+    currentQuestionIndex++
     setNextQuestion()
 }
 
@@ -181,6 +174,28 @@ const questions = [
             "Westley",
             "Wyatt",
             "Solenn"
+        ]
+    }, 
+
+    {
+        question: "Question 3?",
+        answer: "test",
+        options: [
+            "test 1",
+            "test",
+            "test 2",
+            "idk"
+        ]
+    }, 
+
+    {
+        question: "4 four?",
+        answer: "golf",
+        options: [
+            "party",
+            "pencil",
+            "golf",
+            "notes"
         ]
     }, 
 ]

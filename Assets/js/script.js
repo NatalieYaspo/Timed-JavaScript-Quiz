@@ -11,6 +11,7 @@ var correctAns = document.querySelector("#correct-answers");
 var totalQs = document.querySelector("#total-questions");
 var runningScores = document.querySelector("#score-tally");
 var highScoreEl = document.querySelector("#highScores");
+var initialsEl = document.querySelector("#initials");
 
 
 //Question Variable:
@@ -21,7 +22,7 @@ var qsTotal = 0;
 
 //ACTIVE Event Listeners:
 startButton.addEventListener("click", startGame) //tested with Cosole.log
-submitButton.addEventListener("click", logInitialsScore)//NOT TESTED
+// submitButton.addEventListener("submit", logInitialsScore)//NOT TESTED
 
 //Functions to play the game
 function startGame() {
@@ -62,7 +63,7 @@ function setNextQuestion() {
 
 //Shows the questions based on the Questions Array at the bottom.
 function showQuestion(question) {
-    console.log(question);
+    // console.log(question);
     questionEl.innerText = question.question
     question.options.forEach(options => {
         //This swaps out the button placeholders with buttons for new answers.
@@ -129,14 +130,15 @@ function setTotal() {
 function endGame() {
     gameScore.classList.remove("hide");
     runningScores.classList.add("hide");
-    newScore.textContent = "Your Score: " + (scoreCounter / qsTotal)*100 + "%";
-    //CAN I LIMIT %??
-}
+    var finalScore = [(scoreCounter / qsTotal)*100];
+    newScore.textContent = "Your Score: " + finalScore + "%"; //CAN I LIMIT %??
+    submitButton.addEventListener("submit", logInitialsScore) //THIS IS NOT WORKING.
+    function logInitialsScore() {
+        localStorage.setItem("finalScore", finalScore);
+        localStorage.setItem("initials", initialsEl.value);
+        getHighScores();
+    }
 
-
-function logInitialsScore() {
-    scoreCounter.textContent = scoreCounter;
-    localStorage.setItem("newScore", scoreCounter);
 }
 
 //I STILL NEED TO MAKE THIS WORK>
@@ -206,7 +208,7 @@ const questions = [
         options: [
             "<body>",
             "<src>",
-            "<script",
+            "<script>",
             "<meta>"
         ]
     }

@@ -12,7 +12,8 @@ var totalQs = document.querySelector("#total-questions");
 var runningScores = document.querySelector("#score-tally");
 var highScoreEl = document.querySelector("#highScores");
 var initialsEl = document.querySelector("#initials");
-
+var scoreResetEl = document.querySelector("#scoreReset-btn");
+var renderScores = document.querySelector("#renderScores");
 
 //Question Variable:
 var secondsLeft = 60;
@@ -22,7 +23,6 @@ var qsTotal = 0;
 
 //ACTIVE Event Listeners:
 startButton.addEventListener("click", startGame) //tested with Cosole.log
-// submitButton.addEventListener("submit", logInitialsScore)//NOT TESTED
 
 //Functions to play the game
 function startGame() {
@@ -50,7 +50,7 @@ function setTimer() {
             questionContainerEl.classList.add("hide");
             endGame();
         }
-    }, 250); //NEEDS TO BE RESET TO 1000
+    }, 1000);
 }
 
 //This is to set the next question when the time is ready.
@@ -102,63 +102,69 @@ function selectAnswer(e) {
     //Sets total questions answered, increases question index by 1 and runs setting new question.
     setTotal();
     currentQuestionIndex++
-    if (currentQuestionIndex >= questions.length) { // THIS STILL ISN"T WORKING.
+    //If no more questions, show final score & submit initials.
+    if (currentQuestionIndex >= questions.length) {
         endGame();
+    //Otherwise, it shows the next question.
     } else {
     setNextQuestion()
     }
-    //if (question <= currentQuestionIndex.length) {
-    //     setNextQuestion()
-    // //If no more questions, show final score & submit initials.
 }
 
 function setCorrect() {
     correctAns.textContent = "Correct Answers: " + scoreCounter;
-    // localStorage.setItem("correctAns", scoreCounter); //Do I need this?
 }
 
 function setTotal() {
     totalQs.textContent = "Total Questions Answered: " + qsTotal;
-    // localStorage.setItem("qsTotal", qsTotal); //Do I need this?
 }
-
 
 function endGame() {
     gameScore.classList.remove("hide");
     runningScores.classList.add("hide");
     questionContainerEl.classList.add("hide");
     gameTimer.classList.add("hide");
+    // return finalScore.value;
     var finalScore = [(scoreCounter / qsTotal)*100];
     newScore.textContent = "Your Score: " + finalScore + "%"; //CAN I LIMIT %??
 }
 
 submitButton.addEventListener('click', function(event) {
-    event.preventDefault(),//THIS IS NOT WORKING.
-    function logInitialsScore() {
-        localStorage.setItem("finalScore", JSON.stringify(finalScore));
-        localStorage.setItem("initials", JSON.stringify(initialsEl.value));
-    }
-        //Once submitted, user taken to the High Score screen.
+    event.preventDefault();
+    var finalScore = [(scoreCounter / qsTotal)*100];
+    // localStorage.setItem("finalScore", JSON.stringify(finalScore));
+    // localStorage.setItem("initials", JSON.stringify(initialsEl));
+    localStorage.setItem("finalScore", finalScore);
+    localStorage.setItem("initials", initialsEl.value);
+    gameScore.classList.add("hide"); //disappears for a few scronds, then comes back
+    //Once submitted, user taken to the High Score screen.
     getHighScores();
 })
-console.log(submitButton);//RUNS EVEN THOUGH NOT CLICKED.
     
 
 
 //I STILL NEED TO MAKE THIS WORK>
-function getHighScores () { //I have no idea if this will work.  I may need to rework.
+function getHighScores () {
+    gameScore.classList.add("hide"); //disappears for a few scronds, then comes back
     highScoreEl.classList.remove("hide");
-    var storedScores = localStorage.getItem("finalScore");
+    // JSON.parse(localStorage.getItem("finalScore", finalScore));
+    // JSON.parse(localStorage.getItem("initials", initialsEl));
+    var lastScores = localStorage.getItem("finalScore");
+    var lastInitials = localStorage.getItem("initials");
+    var storedScores = (lastInitials + " - " + lastScores) + "%";
+    // console.log(storedScores);
     if (storedScores === null) {
-        highScores = finalScore.value
+        renderScores.textContent = "No high scores."
     } else {
-        highScores = storedScores;
+        renderScores.textContent = storedScores //ONLY SHOWS LAST SCORE.
     }
 }
 
+//Refreshes the page when clicked and resets high scores.
+scoreResetEl.addEventListener('click', clearScores);
 
 function clearScores() {
-    location.reload();
+    location.reload(); 
 }
 
 //List of questions and answers.:

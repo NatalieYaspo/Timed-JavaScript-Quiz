@@ -1,6 +1,7 @@
 var gameTimer = document.querySelector("#gameTimer");
 var questionContainerEl = document.querySelector("#question-container");
 var startButton = document.querySelector("#start-btn");
+var restartButton = document.querySelector("#restart-btn");
 var questionEl = document.querySelector("#question");
 var ansButtonEl = document.querySelector("#answer-btn");
 var formEl = document.querySelector("#initials-frm");
@@ -132,31 +133,26 @@ function endGame() {
 submitButton.addEventListener('click', function(event) {
     event.preventDefault();
     var finalScore = [(scoreCounter / qsTotal)*100];
-    // localStorage.setItem("finalScore", JSON.stringify(finalScore));
-    // localStorage.setItem("initials", JSON.stringify(initialsEl));
     localStorage.setItem("finalScore", finalScore);
     localStorage.setItem("initials", initialsEl.value);
-    gameScore.classList.add("hide"); //disappears for a few scronds, then comes back
+    gameScore.classList.add("hide");
     //Once submitted, user taken to the High Score screen.
     getHighScores();
 })
     
-
-
-//I STILL NEED TO MAKE THIS WORK>
+//Resets the screen to show the high score & initals.  Pulls it from local storage.
 function getHighScores () {
-    gameScore.classList.add("hide"); //disappears for a few scronds, then comes back
+    gameScore.classList.add("hide");
     highScoreEl.classList.remove("hide");
-    // JSON.parse(localStorage.getItem("finalScore", finalScore));
-    // JSON.parse(localStorage.getItem("initials", initialsEl));
     var lastScores = localStorage.getItem("finalScore");
     var lastInitials = localStorage.getItem("initials");
     var storedScores = (lastInitials + " - " + lastScores) + "%";
     // console.log(storedScores);
+    //Shows the last high score.
     if (storedScores === null) {
         renderScores.textContent = "No high scores."
     } else {
-        renderScores.textContent = storedScores //ONLY SHOWS LAST SCORE.
+        renderScores.textContent = storedScores
     }
 }
 

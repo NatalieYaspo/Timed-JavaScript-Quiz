@@ -96,9 +96,10 @@ function selectAnswer(e) {
         scoreCounter++
         // console.log(scoreCounter);
         setCorrect();
+        //Decreases time by 10 seconds if wrong answer is selected.
     } else if (selectedButton.textContent != question.answer) { 
         // console.log("wrong!");
-        secondsLeft.value - 10 //I NEED TO GET THIS TO DECREASE.
+        secondsLeft = secondsLeft - 10;
     }
     //Sets total questions answered, increases question index by 1 and runs setting new question.
     setTotal();
@@ -108,7 +109,7 @@ function selectAnswer(e) {
         endGame();
     //Otherwise, it shows the next question.
     } else {
-    setNextQuestion()
+        setNextQuestion()
     }
 }
 
@@ -120,12 +121,12 @@ function setTotal() {
     totalQs.textContent = "Total Questions Answered: " + qsTotal;
 }
 
+//Ends the game and shows score based on questions answered.
 function endGame() {
     gameScore.classList.remove("hide");
     runningScores.classList.add("hide");
     questionContainerEl.classList.add("hide");
     gameTimer.classList.add("hide");
-    // return finalScore.value;
     var finalScore = [(scoreCounter / qsTotal)*100];
     newScore.textContent = "Your Score: " + finalScore + "%"; //CAN I LIMIT %??
 }

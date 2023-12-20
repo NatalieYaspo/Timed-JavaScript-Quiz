@@ -27,7 +27,7 @@ Once the time is up, the user will be shown their final score and asked to enter
 <img src="./Assets/images/FinalScoreWithInitialsSnap.jpg" alt="Screen showing final score and asking to submit intitals.">
 
 Then the user is taken to the High Score screen.
-<img src="..." alt="High scores for past games.">
+<img src="./Assets/images/HighScoreScreenSnap.jpg" alt="High scores for past game.">
 
 ## Credits
 
